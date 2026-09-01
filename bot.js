@@ -6,7 +6,6 @@ const axios = require('axios');
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
         args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-extensions']
     }
 });
@@ -40,7 +39,7 @@ client.on('message', async (message) => {
                 method: 'GET',
                 url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
                 headers: {
-                    'x-rapidapi-key': 'process.env.API_KEY',
+                    'x-rapidapi-key': process.env.API_KEY,
                     'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
                 }
             };
@@ -62,7 +61,7 @@ client.on('message', async (message) => {
                 for (let series of categoryData.seriesMatches) {
                     if (series.seriesAdWrapper && series.seriesAdWrapper.matches) {
                         for (let match of series.seriesAdWrapper.matches) {
-                            if (matchCount < 3) { // Yahan hum ne limit 3 kar di hai
+                            if (matchCount < 3) {
                                 let team1 = match.matchInfo.team1.teamName;
                                 let team2 = match.matchInfo.team2.teamName;
                                 let status = match.matchInfo.status;
